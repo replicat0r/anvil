@@ -20,6 +20,14 @@ defmodule Anvil.Router do
     get "/", PageController, :index
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+
+  end
+  
+  scope "/manage" , Anvil do
+    pipe_through [:browser, :authenticate_user]
+    resources "/videos", VideoController
+
+  
   end
 
   # Other scopes may use custom stacks.

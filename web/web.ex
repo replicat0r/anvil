@@ -36,6 +36,7 @@ defmodule Anvil.Web do
 
       import Anvil.Router.Helpers
       import Anvil.Gettext
+      import Anvil.Auth, only: [authenticate_user: 2]
     end
   end
 
@@ -58,6 +59,8 @@ defmodule Anvil.Web do
   def router do
     quote do
       use Phoenix.Router
+      import Anvil.Auth, only: [authenticate_user: 2]
+
     end
   end
 
