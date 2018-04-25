@@ -1,17 +1,13 @@
-defmodule Anvil.Video do
+defmodule Anvil.Category do
   use Anvil.Web, :model
 
-  schema "videos" do
-    field :url, :string
-    field :title, :string
-    field :description, :string
-    belongs_to :user, Anvil.User
-    belongs_to :category, Anvil.Category
+  schema "categories" do
+    field :name, :string
 
     timestamps
   end
 
-  @required_fields ~w(url title description)
+  @required_fields ~w(name)
   @optional_fields ~w()
 
   @doc """
@@ -20,9 +16,16 @@ defmodule Anvil.Video do
   If no params are provided, an invalid changeset is returned
   with no validation performed.
   """
+  
+  def alphabetical(query) do
+    from c in query, order_by: c.name
+  end
+  
+  def names_and_ids(query) do
+      from c in query, select: {c.name, c.id}
+  end
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> assoc_constraint(:category)
   end
 end

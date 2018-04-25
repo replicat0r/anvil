@@ -1,7 +1,9 @@
 defmodule Anvil.VideoController do
   use Anvil.Web, :controller
-
   alias Anvil.Video
+  alias Anvil.Category
+  
+  plug :load_categories when action in [:new, :create, :edit, :update]
 
   plug :scrub_params, "video" when action in [:create, :update]
 
